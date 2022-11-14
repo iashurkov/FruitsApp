@@ -19,8 +19,10 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(self.viewModel.shuffled()) { model in
-                    FruitRowView(fruit: model)
-                        .padding(.vertical, 4)
+                    NavigationLink(destination: FruitDetailView(model: model)) {
+                        FruitRowView(model: model)
+                            .padding(.vertical, 4)
+                    }
                 }
             } //: List
             .navigationTitle("Fruits")

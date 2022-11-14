@@ -11,31 +11,31 @@ struct FruitRowView: View {
     
     // MARK: Property
     
-    var fruit: Fruit
+    var model: Fruit
     
     // MARK: Body
     
     var body: some View {
         HStack {
-            Image(self.fruit.image)
+            Image(self.model.image)
                 .renderingMode(.original)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 80, height: 80, alignment: .center)
                 .shadow(color: .black.opacity(0.3), radius: 3, x: 2, y: 2)
                 .background(
-                    LinearGradient(gradient: Gradient(colors: self.fruit.gradientColors),
+                    LinearGradient(gradient: Gradient(colors: self.model.gradientColors),
                                    startPoint: .top,
                                    endPoint: .bottom)
                 )
                 .cornerRadius(8)
             
             VStack(alignment: .leading, spacing: 5) {
-                Text(self.fruit.title)
+                Text(self.model.title)
                     .font(.title2)
                     .fontWeight(.bold)
                 
-                Text(self.fruit.headline)
+                Text(self.model.headline)
                     .font(.caption)
                     .foregroundColor(.secondary)
             } //: VStack
@@ -47,7 +47,7 @@ struct FruitRowView: View {
 
 struct FruitRowView_Previews: PreviewProvider {
     static var previews: some View {
-        FruitRowView(fruit: fruitsData[0])
+        FruitRowView(model: fruitsData[0])
             .previewLayout(.sizeThatFits)
             .padding()
     }
