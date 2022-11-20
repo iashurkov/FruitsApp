@@ -13,6 +13,8 @@ struct SettingsView: View {
     
     @Environment(\.presentationMode) var presentationMode
     
+    @AppStorage("isOnboarding") var isOnboarding = false
+    
     // MARK: Body
     
     var body: some View {
@@ -21,7 +23,8 @@ struct SettingsView: View {
                 VStack(spacing: 20) {
                     
                     // Mark: Section 1
-                    GroupBox(label: SettingsLabelView(labelText: "Fructus", labelImage: "info.circle")
+                    GroupBox(label: SettingsLabelView(labelText: "Fructus",
+                                                      labelImage: "info.circle")
                     ) {
                         Divider().padding(.vertical, 4)
                         
@@ -38,19 +41,51 @@ struct SettingsView: View {
                     } //: GroupBox
                     
                     // Mark: Section 2
-                    GroupBox(label: SettingsLabelView(labelText: "Application", labelImage: "apps.iphone")
+                    
+                    GroupBox(label: SettingsLabelView(labelText: "Customization",
+                                                      labelImage: "paintbrush")
+                    ) {
+                        Divider().padding(.vertical, 4)
+                        
+                        Text("If you wish, you can restart the application by toggle the switch in this box. That way it starts the onboarding process and you will see the welcome screen again.")
+                            .padding(.vertical, 8)
+                            .frame(minHeight: 60)
+                            .layoutPriority(1)
+                            .font(.footnote)
+                            .multilineTextAlignment(.leading)
+                        
+                        Toggle(isOn: $isOnboarding) {
+                            if self.isOnboarding {
+                                Text("Restarted".uppercased())
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.green)
+                            } else {
+                                Text("Restart".uppercased())
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                        .padding()
+                        .background() {
+                            Color(.tertiarySystemBackground)
+                                .clipShape(RoundedRectangle(cornerRadius: 9, style: .continuous))
+                        }
+                    } //: GroupBox
+                    
+                    // Mark: Section 3
+                    GroupBox(label: SettingsLabelView(labelText: "Application",
+                                                      labelImage: "apps.iphone")
                     ) {
                         SettingsRowView(name: "Developer", content: "Igor")
                         SettingsRowView(name: "Design", content: "Robert Petras")
                         SettingsRowView(name: "Compatibility", content: "iOS 16")
                         SettingsRowView(name: "Version SwiftUI", content: "3.0")
                         SettingsRowView(name: "Version Application", content: "1.0")
-                        SettingsRowView(name: "Website", linkLabel: "SwiftUI Masterclass", linkDestination: "swiftuimasterclass.com")
+                        SettingsRowView(name: "Website",
+                                        linkLabel: "SwiftUI Masterclass",
+                                        linkDestination: "swiftuimasterclass.com")
                         
                     } //: GroupBox
-                    
-                    // Mark: Section 3
-                    
                 } //: VStack
                 .navigationTitle("Settings")
                 .navigationBarTitleDisplayMode(.large)
