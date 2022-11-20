@@ -11,6 +11,8 @@ struct ContentView: View {
     
     // MARK: Property
     
+    @State private var isShowingSettings = false
+    
     let viewModel: [Fruit]
     
     // MARK: Body
@@ -22,10 +24,20 @@ struct ContentView: View {
                     NavigationLink(destination: FruitDetailView(model: model)) {
                         FruitRowView(model: model)
                             .padding(.vertical, 4)
-                    }
-                }
+                    } //: NavigationLink
+                } //: ForEach
             } //: List
             .navigationTitle("Fruits")
+            .toolbar {
+                Button(action: {
+                    self.isShowingSettings = true
+                }) {
+                    Image(systemName: "slider.horizontal.3")
+                } //: Button
+                .sheet(isPresented: $isShowingSettings) {
+                    SettingsView()
+                }
+            }
         } //: NavigationView
     }
 }
